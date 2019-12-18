@@ -1,0 +1,39 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+//sigue el codigo en java para el parser
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+//aca se especifican las variables terminales que tiene la gramatica
+terminal Negacion, Sientonces, Siysolosi, And, Or, Parentesis_a, Parentesis_c,
+     Proposicion, ERROR, Comillas;
+//aca se especifican las variables no terminales que tendra la gramatica, estas generan el lenguaje
+non terminal INICIO, SENTENCIA, CONECTIVA ;
+
+
+//Indica que la gramatica inicia desde la etiqueta "INICIO"
+start with INICIO;
+
+INICIO ::=  
+    Negacion Parentesis_a SENTENCIA Parentesis_c |
+    Parentesis_a SENTENCIA Parentesis_c CONECTIVA Parentesis_a SENTENCIA Parentesis_c|
+    SENTENCIA CONECTIVA SENTENCIA |
+    Negacion SENTENCIA | 
+    Negacion Proposicion  
+;
+SENTENCIA ::=    
+    Proposicion CONECTIVA Proposicion    
+;
+CONECTIVA ::= 
+    Sientonces | Siysolosi | And | Or
+;
